@@ -5,7 +5,7 @@ import SpeedRate from "./SpeedRate.js";
 
 // Отвечает является ли карта уткой.
 function isDuck(card) {
-    return card && card.quacks && card.swims;
+    return card instanceof Duck;
 }
 
 // Отвечает является ли карта собакой.
@@ -28,7 +28,10 @@ function getCreatureDescription(card) {
 }
 
 // Основа для утки.
-class Duck {
+class Duck extends Card {
+    constructor (){
+        super("Мирная утка", 2, "./src/images/sheriff.png")
+    }
     quacks() {
         console.log("quack");
     }
@@ -38,13 +41,17 @@ class Duck {
 }
 
 // Основа для собаки.
-class Dog {}
+class Dog extends Card{
+    constructor() {
+        super("Пес-бандит", 3, "./src/images/bandit.png");
+    }
+}
 
 // Колода Шерифа, нижнего игрока.
 const seriffStartDeck = [
-    new Card("Мирный житель", 2),
-    new Card("Мирный житель", 2),
-    new Card("Мирный житель", 2),
+    new Duck(),
+    new Duck(),
+    new Duck(),
 ];
 
 // Колода Бандита, верхнего игрока.
