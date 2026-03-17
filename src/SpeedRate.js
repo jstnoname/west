@@ -1,18 +1,15 @@
-const SpeedRate = function() {
-    let speedRate = 1;
-
-    function set(value) {
-        speedRate = value;
+class SpeedRate {
+    constructor() {
+        this.speedRate = 1;
     }
 
-    function get() {
-        return speedRate;
+    set(value) {
+        this.speedRate = value;
     }
 
-    return {
-        set,
-        get
-    };
-}();
+    get() {
+        return this.speedRate;
+    }
+}
 
-export default SpeedRate;
+export default new SpeedRate();
