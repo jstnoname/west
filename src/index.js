@@ -93,20 +93,34 @@ class Lad extends Dog {
         super("Браток", 2);
     }
 
-    static getInGameCount() { return this.inGameCount || 0; }
-    static setInGameCount(value) { this.inGameCount = value; }
+    static getInGameCount() {
+        return this.inGameCount || 0;
+    }
 
-    doAfterComingIntoPlay(continuation){
-        this.inGameCount++;
+    static setInGameCount(value) {
+        this.inGameCount = value;
+    }
+
+    static getBonus() {
+        const count = this.getInGameCount();
+        return (count * (count + 1)) / 2;
+    }
+
+    doAfterComingIntoPlay(gameContext, continuation) {
+        Lad.setInGameCount(Lad.getInGameCount() + 1);
         continuation()
     }
 
-    doBeforeRemoving(continuation){
-
+    doBeforeRemoving(continuation) {
+        Lad.setInGameCount(Lad.getInGameCount() - 1);
+        continuation()
     }
 
-    modifyDealedDamageToCreature(value, fromCard, gameContext, continuation){
-
+    modifyDealedDamageToCreature(value, toCard, gameContext, continuation) {
+        continuation(value + Lad.getBonus());
+    }
+    modifyTakenDamage(value, fromCard, gameContext, continuation) {
+        continuation(value - Lad.getBonus());
     }
 
     getDescriptions() {
@@ -125,7 +139,6 @@ const seriffStartDeck = [
 ];
 const banditStartDeck = [
     new Trasher(),
-    new Lad(),
     new Dog(),
     new Dog(),
 ];
