@@ -1,7 +1,7 @@
-import Card from './Card.js';
-import Game from './Game.js';
-import TaskQueue from './TaskQueue.js';
-import SpeedRate from './SpeedRate.js';
+import Card from "./Card.js";
+import Game from "./Game.js";
+import TaskQueue from "./TaskQueue.js";
+import SpeedRate from "./SpeedRate.js";
 
 // Отвечает является ли карта уткой.
 function isDuck(card) {
@@ -35,8 +35,8 @@ class Creature extends Card {
 
 // Основа для утки.
 class Duck extends Creature {
-    constructor (){
-        super("Мирная утка", 2, "sheriff.png")
+    constructor() {
+        super("Мирная утка", 2, "sheriff.png");
     }
     quacks() {
         console.log("quack");
@@ -88,14 +88,44 @@ class Gatling extends Creature {
     }
 }
 
+class Lad extends Dog {
+    constructor() {
+        super("Браток", 2);
+    }
+
+    static getInGameCount() { return this.inGameCount || 0; }
+    static setInGameCount(value) { this.inGameCount = value; }
+
+    doAfterComingIntoPlay(continuation){
+        this.inGameCount++;
+        continuation()
+    }
+
+    doBeforeRemoving(continuation){
+
+    }
+
+    modifyDealedDamageToCreature(value, fromCard, gameContext, continuation){
+
+    }
+
+    getDescriptions() {
+        return [
+            "получает меньше урона и наносит больше урона чем больше братков находятся в игре",
+        ];
+    }
+}
+
 const seriffStartDeck = [
     new Duck(),
     new Duck(),
     new Duck(),
+    new Lad(),
     new Gatling(),
 ];
 const banditStartDeck = [
     new Trasher(),
+    new Lad(),
     new Dog(),
     new Dog(),
 ];
