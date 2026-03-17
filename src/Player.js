@@ -31,7 +31,7 @@ class Player {
         const taskQueue = new TaskQueue();
 
         taskQueue.push((onDone) => {
-            this.currentPower = this.currentPower - value;
+            this.currentPower = Math.max(this.currentPower - value, 0);
             this.updateView();
 
             this.view.signalDamage(onDone);
