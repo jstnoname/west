@@ -30,7 +30,7 @@ function getCreatureDescription(card) {
 // Основа для утки.
 class Duck extends Card {
     constructor (){
-        super("Мирная утка", 2, "./src/images/sheriff.png")
+        super("Мирная утка", 2, "sheriff.png")
     }
     quacks() {
         console.log("quack");
@@ -43,7 +43,7 @@ class Duck extends Card {
 // Основа для собаки.
 class Dog extends Card{
     constructor() {
-        super("Пес-бандит", 3, "./src/images/bandit.png");
+        super("Пес-бандит", 3, "bandit.png");
     }
 }
 

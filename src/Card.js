@@ -238,7 +238,7 @@ class Card {
     // Строит описания карты, которые показываются на ее лицевой стороне.
     // Можно переопределить в наследниках.
     getDescriptions() {
-        return [getInheritanceDescription(this)];
+        return [this.getInheritanceDescription(this)];
     }
 
     // Строит описание цепочки прототипов с помощью имен конструкторов.

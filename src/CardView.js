@@ -4,8 +4,8 @@ import TaskQueue from "./TaskQueue.js";
 class CardView {
     constructor() {
         this.inBottomRow = false;
-        this.card = createFromTemplate();
-        this.signal = this.card.querySelector(".cardSignal");
+        this.card = this.createFromTemplate();
+        this.signalElement = this.card.querySelector(".cardSignal");
         this.name = this.card.querySelector(".cardName");
         this.descriptions = this.card.querySelector(".cardDescriptions");
         this.image = this.card.querySelector(".cardImage img");
@@ -70,15 +70,15 @@ class CardView {
     }
 
     signalHeal(continuation) {
-        signal(this.signal, SpeedRate.get(), "heal", continuation);
+        this.signal(this.signalElement, SpeedRate.get(), "heal", continuation);
     }
 
     signalDamage(continuation) {
-        signal(this.signal, SpeedRate.get(), "damage", continuation);
+        this.signal(this.signalElement, SpeedRate.get(), "damage", continuation);
     }
 
     signalAbility(continuation) {
-        signal(this.signal, SpeedRate.get(), "ability", continuation);
+        this.signal(this.signalElement, SpeedRate.get(), "ability", continuation);
     }
 
     showAttack(continuation) {
@@ -105,8 +105,8 @@ class CardView {
     moveTo(target, continuation) {
         const taskQueue = new TaskQueue();
 
-        const targetOffset = getOffset(target);
-        const cardOffset = getOffset(this.card);
+        const targetOffset = this.getOffset(target);
+        const cardOffset = this.getOffset(this.card);
         const dx = targetOffset.left - cardOffset.left;
         const dy = targetOffset.top - cardOffset.top;
 

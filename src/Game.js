@@ -10,12 +10,12 @@ class Game {
     // Подготавливает колоды, создает игроков, запускает игру.
     play(needShuffleDecks, onGameOver) {
         const bottomPlayerDeck = needShuffleDecks
-            ? copyAndShuffle(this.bottomPlayerStartDeck)
-            : copyAndReverse(this.bottomPlayerStartDeck);
+            ? this.copyAndShuffle(this.bottomPlayerStartDeck)
+            : this.copyAndReverse(this.bottomPlayerStartDeck);
 
         const topPlayerDeck = needShuffleDecks
-            ? copyAndShuffle(this.topPlayerStartDeck)
-            : copyAndReverse(this.topPlayerStartDeck);
+            ? this.copyAndShuffle(this.topPlayerStartDeck)
+            : this.copyAndReverse(this.topPlayerStartDeck);
 
         const bottomPlayer = new Player(
             this,
@@ -44,7 +44,7 @@ class Game {
         this.currentPlayer = topPlayer;
         this.oppositePlayer = bottomPlayer;
 
-        playStaged(this, 0, onGameOver);
+        this.playStaged(this, 0, onGameOver);
     }
 
     // Выполняет действия для некоторой стадии хода.
@@ -53,35 +53,35 @@ class Game {
         switch (stage) {
             case 0:
                 game.currentPlayer.playNewCard(() =>
-                    playStaged(game, 1, onGameOver),
+                    this.playStaged(game, 1, onGameOver),
                 );
                 break;
             case 1:
                 game.currentPlayer.applyCards(() =>
-                    playStaged(game, 2, onGameOver),
+                    this.playStaged(game, 2, onGameOver),
                 );
                 break;
             case 2:
                 game.oppositePlayer.removeDeadAndCompactTable(() =>
-                    playStaged(game, 3, onGameOver),
+                    this.playStaged(game, 3, onGameOver),
                 );
                 break;
             case 3:
                 game.currentPlayer.removeDeadAndCompactTable(() =>
-                    playStaged(game, 4, onGameOver),
+                    this.playStaged(game, 4, onGameOver),
                 );
                 break;
             case 4:
-                const winner = getWinner(game);
+                const winner = this.getWinner(game);
                 if (winner) {
                     onGameOver(winner);
                     return;
                 }
-                playStaged(game, 5, onGameOver);
+                this.playStaged(game, 5, onGameOver);
                 break;
             case 5:
-                changePlayer(game);
-                playStaged(game, 0, onGameOver);
+                this.changePlayer(game);
+                this.playStaged(game, 0, onGameOver);
                 break;
             default:
                 break;
@@ -111,10 +111,10 @@ class Game {
     }
 
     getWinner(game) {
-        if (hasNoPower(game.oppositePlayer)) {
+        if (this.hasNoPower(game.oppositePlayer)) {
             return game.currentPlayer;
         }
-        if (hasNoPower(game.currentPlayer)) {
+        if (this.hasNoPower(game.currentPlayer)) {
             return game.oppositePlayer;
         }
         return null;
@@ -135,7 +135,7 @@ class Game {
 
     copyAndShuffle(array) {
         const result = [...array];
-        result.sort(compareRandom);
+        result.sort(this.compareRandom);
         return result;
     }
 

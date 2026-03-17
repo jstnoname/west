@@ -4,7 +4,7 @@ import TaskQueue from "./TaskQueue.js";
 class PlayerView {
     constructor(playerRow, playerTable, inBottomRow) {
         this.inBottomRow = inBottomRow;
-        this.signal = playerRow.querySelector(".playerSignal");
+        this.signalElement = playerRow.querySelector(".playerSignal");
         this.image = playerRow.querySelector(".playerImage img");
         this.currentPower = playerRow.querySelector(".playerCurrentPower");
         this.maxPower = playerRow.querySelector(".playerMaxPower");
@@ -23,15 +23,15 @@ class PlayerView {
     }
 
     signalHeal(continuation) {
-        signal(this.signal, SpeedRate.get(), "heal", continuation);
+        this.signal(this.signalElement, SpeedRate.get(), "heal", continuation);
     }
 
     signalDamage(continuation) {
-        signal(this.signal, SpeedRate.get(), "damage", continuation);
+        this.signal(this.signalElement, SpeedRate.get(), "damage", continuation);
     }
 
     signalTurnStart(continuation) {
-        signal(this.signal, SpeedRate.get() / 2, "turnStart", continuation);
+        this.signal(this.signalElement, SpeedRate.get() / 2, "turnStart", continuation);
     }
 
     signal(signalElement, speedRate, signalName, continuation) {
